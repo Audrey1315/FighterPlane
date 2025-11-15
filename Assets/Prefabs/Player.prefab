@@ -104,7 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6716e2129d1894e8c9da2e62b671ceca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  lives: 0
   bulletPrefab: {fileID: 5389504428419873687, guid: f593079c4b884435e9eb24b371a318db, type: 3}
+  explosionPrefab: {fileID: 7671464568039207638, guid: 42813668a0ca44ab7a49f063cd78dd59, type: 3}
 --- !u!50 &1655158180324008363
 Rigidbody2D:
   serializedVersion: 5
