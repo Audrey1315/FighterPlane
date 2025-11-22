@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +18,12 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject explosionPrefab;
 
+    private bool shieldActive = false;
+    private float shieldTimer = 0f;
+
+    public TextMeshProUGUI shieldText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +38,33 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         Shooting();
+
+        if (shieldActive)
+        {
+            shieldTimer -= Time.deltaTime;
+
+            if (shieldTimer <= 0)
+            {
+            shieldActive = false;
+
+                if (shieldText != null)
+                shieldText.gameObject.SetActive(false);
+
+            gameManager.PlaySound(2);
+            }
+        }
     }
 
     public void LoseALife()
     {
-        //lives = lives - 1;
-        //lives -= 1;
+        if (shieldActive)
+        {
+            shieldActive = false;
+            if (shieldText != null)
+            shieldText.gameObject.SetActive(false);
+            return;
+        }
+
         lives--;
         gameManager.ChangeLivesText(lives);
         if (lives == 0)
@@ -70,5 +99,16 @@ public class PlayerController : MonoBehaviour
         float clampedY = Mathf.Clamp(transform.position.y, -verticalScreenSize, 0);
         transform.position = new Vector3(transform.position.x, clampedY, transform.position.z);
 
+    }
+
+    public void ActivateShield(float time)
+    {
+        shieldActive = true;
+        shieldTimer = time;
+        if (shieldText != null)
+        shieldText.gameObject.SetActive(true);
+
+        gameManager.PlaySound(1);
+        
     }
 }

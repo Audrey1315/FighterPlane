@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject restartText;
     public GameObject audioPlayer;
     public GameObject SecondEnemyPrefab;
+    public GameObject shieldPrefab;
 
     public AudioClip powerupSound;
     public AudioClip powerdownSound;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         CreateSky();
         InvokeRepeating("CreateEnemy", 1, 3);
         InvokeRepeating("CreateSecondEnemy", 5, 7);
+        InvokeRepeating("CreateShield", 5, 10);
     }
 
     void Update()
@@ -99,5 +101,12 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         CancelInvoke();
         cloudMove = 0;
+    }
+
+    void CreateShield()
+    {
+        float spawnY = verticalScreenSize / 8;
+        float spawnX = Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f;
+        Instantiate(shieldPrefab, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
     }
 }
